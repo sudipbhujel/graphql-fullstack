@@ -27,10 +27,17 @@ const authLink = setContext((_, { headers }) => {
   }
 })
 
-const logoutLink = onError(({ networkError }) => {
-  if ((networkError as ServerError)?.statusCode === 401) {
-    removeLoginToken()
-    redirect("/")
+const logoutLink = onError(({ graphQLErrors }) => {
+  if (graphQLErrors) {
+    for (const err of graphQLErrors) {
+      switch (err.extensions.code) {
+        case "UNAUTHENTICATED":
+          removeLoginToken()
+          break
+        default:
+          break
+      }
+    }
   }
 })
 

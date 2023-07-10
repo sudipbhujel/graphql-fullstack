@@ -3,7 +3,7 @@ import { useAuthStore } from "@/store/auth-store"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { FC } from "react"
 import { useForm } from "react-hook-form"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useSearchParams } from "react-router-dom"
 import * as z from "zod"
 import { Icons } from "../icons"
 import { Button } from "../ui/button"
@@ -34,13 +34,15 @@ const LoginForm: FC = () => {
 
   const { toast } = useToast()
   const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
 
   const { setAuth } = useAuthStore()
 
   const [mutate, { loading }] = useLoginMutation()
 
+  const next = searchParams.get("next") || "/"
+
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
-    // console.log(data)
     await mutate({
       variables: { data },
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -51,7 +53,8 @@ const LoginForm: FC = () => {
           description: "You are now logged in",
           duration: 2000,
         })
-        navigate("/")
+
+        navigate(next)
       },
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       onError(error, _clientOptions) {

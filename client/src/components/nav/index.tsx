@@ -18,6 +18,12 @@ const Navbar: FC = () => {
           >
             Home
           </Link>
+          <Link
+            to="/todos"
+            className="text-sm font-medium transition-colors hover:text-primary"
+          >
+            Todo
+          </Link>
         </nav>
         <div className="ml-auto flex items-center space-x-4">
           {user ? (

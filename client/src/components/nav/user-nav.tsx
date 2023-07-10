@@ -10,9 +10,12 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { useAuthStore } from "@/store/auth-store"
+import { useNavigate } from "react-router-dom"
 
 export function UserNav() {
   const { user, logout } = useAuthStore()
+
+  const navigate = useNavigate()
 
   return (
     <DropdownMenu>
@@ -41,7 +44,12 @@ export function UserNav() {
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={logout}>
+        <DropdownMenuItem
+          onClick={() => {
+            logout()
+            navigate("/")
+          }}
+        >
           Log out
           <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
         </DropdownMenuItem>

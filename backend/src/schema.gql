@@ -65,11 +65,15 @@ scalar DateTime
 type Query {
   profile: UserEntity!
   todos: [TodoEntity!]!
+  todo(id: String!): TodoEntity!
 }
 
 type Mutation {
   register(data: RegisterUserInput!): AuthEntity!
   login(data: LoginUserInput!): AuthEntity!
+  createTodo(data: CreateTodoInput!): TodoEntity!
+  updateTodo(data: UpdateTodoInput!): TodoEntity!
+  removeTodo(id: String!): TodoEntity!
 }
 
 input RegisterUserInput {
@@ -92,4 +96,22 @@ input LoginUserInput {
 
   """User password"""
   password: String!
+}
+
+input CreateTodoInput {
+  """Title of the todo"""
+  title: String!
+
+  """Description of the todo"""
+  description: String!
+}
+
+input UpdateTodoInput {
+  """Title of the todo"""
+  title: String
+
+  """Description of the todo"""
+  description: String
+  id: String!
+  completed: Boolean
 }

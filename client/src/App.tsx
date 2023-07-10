@@ -1,9 +1,15 @@
-import { RouterProvider, createBrowserRouter, redirect } from "react-router-dom"
+import {
+  Navigate,
+  RouterProvider,
+  createBrowserRouter,
+  redirect,
+  useLocation,
+} from "react-router-dom"
 import ErrorPage from "./error-page"
+import { retrieveLoginToken } from "./lib/localstorage-helper"
 import Home from "./pages"
 import Login from "./pages/login"
-import Protected from "./pages/protected"
-import { retrieveLoginToken } from "./lib/localstorage-helper"
+import Todo from "./pages/todo"
 
 const loginLoader = () => {
   const token = retrieveLoginToken()
@@ -11,10 +17,16 @@ const loginLoader = () => {
   return null
 }
 
-const authenticated = () => {
+const ProtectedElement = ({ children }: { children: JSX.Element }) => {
   const token = retrieveLoginToken()
-  if (!token) return redirect("/login")
-  return null
+  const location = useLocation()
+
+  if (!token) {
+    const path = `/login?next=${location.pathname}`
+
+    return <Navigate to={path} />
+  }
+  return children
 }
 
 const router = createBrowserRouter([
@@ -30,10 +42,14 @@ const router = createBrowserRouter([
     loader: loginLoader,
   },
   {
-    path: "/protected",
-    element: <Protected />,
+    path: "/todos",
+    element: (
+      <ProtectedElement>
+        <Todo />
+      </ProtectedElement>
+    ),
     errorElement: <ErrorPage />,
-    loader: authenticated,
+    // loader: authenticated,
   },
 ])
 
