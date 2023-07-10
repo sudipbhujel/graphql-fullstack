@@ -1,0 +1,11 @@
+mutation RemoveTodo($id: String!) {
+  removeTodo(id: $id) {
+    id
+    title
+    description
+    completed
+    userId
+    createdAt
+    updatedAt
+  }
+}

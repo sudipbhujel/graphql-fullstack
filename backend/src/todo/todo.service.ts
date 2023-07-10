@@ -23,7 +23,7 @@ export class TodoService {
   }
 
   async findOneOfUser(id: string, userId: string) {
-    return (await this.todoModel.findOne({ _id: id, userId })).toObject();
+    return (await this.todoModel.findOne({ _id: id, userId }))?.toObject();
   }
 
   async updateOneOfUser(id: string, data: UpdateTodoInput) {
