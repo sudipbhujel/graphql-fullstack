@@ -23,6 +23,23 @@ import { TodoModule } from './todo/todo.module';
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: 'src/schema.gql',
+      subscriptions: {
+        'graphql-ws': {
+          path: '/graphql',
+          onConnect: (connectionParams) => {
+            console.log(
+              '🚀 ~ file: app.module.ts:29 ~ connectionParams:',
+              connectionParams,
+            );
+          },
+          onDisconnect: (connectionParams) => {
+            console.log(
+              '🚀 ~ file: app.module.ts:35 ~ connectionParams:',
+              connectionParams,
+            );
+          },
+        },
+      },
     }),
     UserModule,
     AuthModule,

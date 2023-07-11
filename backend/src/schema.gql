@@ -115,3 +115,7 @@ input UpdateTodoInput {
   id: String!
   completed: Boolean
 }
+
+type Subscription {
+  newMessage: String!
+}

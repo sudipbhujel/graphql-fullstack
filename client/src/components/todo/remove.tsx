@@ -42,7 +42,7 @@ const TodoRemoveButton: FC<TodoRemoveButtonProps> = ({ id }) => {
         })
       },
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      onError(error, _clientOptions) {
+      onError(error) {
         toast({
           title: "Error",
           description: error?.message || "Something went wrong",
@@ -54,8 +54,8 @@ const TodoRemoveButton: FC<TodoRemoveButtonProps> = ({ id }) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="link">
-          <Trash />
+        <Button variant="link" className="text-red-500 hover:text-red-600">
+          <Trash className="w-5 h-5" />
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>

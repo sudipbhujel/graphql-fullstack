@@ -1,0 +1,11 @@
+query GetTodo($id: String!) {
+  todo(id: $id) {
+    id
+    title
+    description
+    completed
+    userId
+    createdAt
+    updatedAt
+  }
+}

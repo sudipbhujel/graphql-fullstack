@@ -56,6 +56,7 @@ const TodoCreateButton: FC = () => {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       async onCompleted() {
         setOpen(false)
+        form.reset()
         await client.refetchQueries({
           include: ["GetTodos"],
         })
