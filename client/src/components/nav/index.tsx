@@ -1,12 +1,13 @@
 import { cn } from "@/lib/utils"
 import { FC } from "react"
-import { Link } from "react-router-dom"
+import { Link, useLocation, useParams } from "react-router-dom"
 import { UserNav } from "./user-nav"
 import { useAuthStore } from "@/store/auth-store"
 import { buttonVariants } from "../ui/button"
 
 const Navbar: FC = () => {
   const { user } = useAuthStore()
+  const { pathname } = useLocation()
 
   return (
     <div className="border-b">
@@ -20,7 +21,12 @@ const Navbar: FC = () => {
           </Link>
           <Link
             to="/todos"
-            className="text-sm font-medium transition-colors hover:text-primary"
+            className={cn(
+              "text-sm font-medium transition-colors hover:text-primary",
+              {
+                [buttonVariants({ variant: "outline" })]: pathname === "/todos",
+              }
+            )}
           >
             Todo
           </Link>
